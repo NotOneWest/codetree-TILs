@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 int score;
@@ -67,39 +68,31 @@ void addScore(){
 
         if(yellow == 4){
             score++;
-            if(i > 6){
-                int temp[4];
-                for(int j=0; j<4; j++){
-                    for(int up = 1; up < i; up++){
-                        if(board[i-up][j] == 0){
-                            board[i - up + 1][j] = 0;
-                            break;
-                        }
-                        board[i - up + 1][j] = board[i-up][j];
-                        board[i-up][j] = 0;
+            int temp[4];
+            for(int j=0; j<4; j++){
+                for(int up = 1; up < i; up++){
+                    if(board[i-up][j] == 0){
+                        board[i - up + 1][j] = 0;
+                        break;
                     }
+                    board[i - up + 1][j] = board[i-up][j];
+                    board[i-up][j] = 0;
                 }
-            } else{
-                for(int j=0; j<4; j++) board[i][j] = 0;
             }
         }
 
         if(red == 4){
             score++;
-            if(i > 6){
-                int temp[4];
-                for(int j=0; j<4; j++){
-                    for(int up = 1; up < i; up++){
-                        if(board[j][i-up] == 0){
-                            board[j][i-up+1] = 0;
-                            break;
-                        }
-                        board[j][i-up+1] = board[j][i-up];
-                        board[j][i-up] = 0;
+            int temp[4];
+            for(int j=0; j<4; j++){
+                for(int up = 1; up < i; up++){
+                    if(board[j][i-up] == 0){
+                        board[j][i-up+1] = 0;
+                        break;
                     }
+                    board[j][i-up+1] = board[j][i-up];
+                    board[j][i-up] = 0;
                 }
-            } else{
-                for(int j=0; j<4; j++) board[j][i] = 0;
             }
         }
     }
@@ -152,5 +145,8 @@ int main(){
         }
     }
     cout << score << '\n' << cnt;
+
+
+
     return 0;
 }
