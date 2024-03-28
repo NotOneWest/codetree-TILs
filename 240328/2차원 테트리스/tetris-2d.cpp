@@ -1,5 +1,4 @@
 #include <iostream>
-
 using namespace std;
 
 int score;
@@ -70,14 +69,7 @@ void addScore(){
             score++;
             int temp[4];
             for(int j=0; j<4; j++){
-                for(int up = 1; up < i; up++){
-                    if(board[i-up][j] == 0){
-                        board[i - up + 1][j] = 0;
-                        break;
-                    }
-                    board[i - up + 1][j] = board[i-up][j];
-                    board[i-up][j] = 0;
-                }
+                for(int up = i; up > 4; up --) board[up][j] = board[up-1][j];
             }
         }
 
@@ -85,14 +77,7 @@ void addScore(){
             score++;
             int temp[4];
             for(int j=0; j<4; j++){
-                for(int up = 1; up < i; up++){
-                    if(board[j][i-up] == 0){
-                        board[j][i-up+1] = 0;
-                        break;
-                    }
-                    board[j][i-up+1] = board[j][i-up];
-                    board[j][i-up] = 0;
-                }
+                for(int up = i; up > 4; up --) board[j][up] = board[j][up-1];
             }
         }
     }
@@ -140,13 +125,8 @@ int main(){
 
     int cnt = 0;
     for(int i=6; i<10; i++){
-        for(int j=0; j<4; j++){
-            cnt += (board[i][j] + board[j][i]);
-        }
+        for(int j=0; j<4; j++) cnt += (board[i][j] + board[j][i]);
     }
     cout << score << '\n' << cnt;
-
-
-
     return 0;
 }
