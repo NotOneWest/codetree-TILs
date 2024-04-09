@@ -50,10 +50,10 @@ void fight(int p1, int p2) {
     
     // p1 : 이긴 사람, p2 : 진 사람
     int x = players[p2].x, y = players[p2].y;
-    if (players[p2].gun != 0) {
-        board[x][y].push_back(players[p2].gun);
-        players[p2].gun = 0;
-    }
+    if (board[x][y][0] != 0) {
+        if (players[p2].gun != 0) board[x][y].push_back(players[p2].gun);
+    } else board[x][y][0] = players[p2].gun;
+    players[p2].gun = 0;
 
     int nx, ny, dir = players[p2].d;
     while (1) {
