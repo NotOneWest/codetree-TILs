@@ -11,7 +11,7 @@ struct Node {
 };
 
 Node nodes[100001];
-unordered_map<int, int> id_map;
+unordered_map<long long, long long> id_map;
 
 struct List {
 	Node head;
