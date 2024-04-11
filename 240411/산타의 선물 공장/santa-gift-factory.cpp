@@ -40,22 +40,22 @@ int main() {
 	cin.tie(NULL);
 
 	int q; cin >> q;
-	int n, m;
+	long long n, m;
 	for (int tc = 0; tc < q; tc++) {
 		int cmd; cin >> cmd;
 		if (cmd == 100) {
 			cin >> n >> m;
 
-			for (int i = 0; i < m; i++) belt[i].init();
+			for (int i = 0; i <= m; i++) belt[i].init();
 
-			for (int i = 0; i < n; i++) {
+			for (long long i = 0; i < n; i++) {
 				cin >> nodes[i].id;
 				nodes[i].gone = 0; nodes[i].line = i / (n / m);
 				id_map[nodes[i].id] = i;
 			}
 			for (int i = 0; i < n; i++) cin >> nodes[i].w;
 
-			for(int i=0; i<n; i++) belt[i / (n / m)].insert(&nodes[i]);
+			for(long long i=0; i<n; i++) belt[i / (n / m)].insert(&nodes[i]);
 		}
 		else if (cmd == 200) {
 			long long w_max; cin >> w_max;
@@ -79,7 +79,7 @@ int main() {
 		else if (cmd == 300) {
 			long long r_id; cin >> r_id;
 			if (id_map.count(r_id) == 1) {
-				int now = id_map[r_id];
+				long long now = id_map[r_id];
 				if (nodes[now].gone) cout << "-1\n";
 				else {
 					belt[nodes[now].line].link(nodes[now].prev, nodes[now].next);
@@ -92,7 +92,7 @@ int main() {
 		else if (cmd == 400) {
 			long long f_id; cin >> f_id;
 			if (id_map.count(f_id) == 1) {
-				int now = id_map[f_id];
+				long long now = id_map[f_id];
 				if (nodes[now].gone) cout << "-1\n";
 				else {
 					belt[nodes[now].line].link(belt[nodes[now].line].tail.prev, belt[nodes[now].line].head.next);
