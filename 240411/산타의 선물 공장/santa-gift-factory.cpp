@@ -71,6 +71,7 @@ int main() {
 				}
 				else {
 					belt[i].link(curr->prev, curr->next);
+					belt[i].link(belt[i].tail.prev, curr);
 					belt[i].link(curr, &belt[i].tail);
 				}
 			}
