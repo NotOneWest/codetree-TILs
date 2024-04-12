@@ -27,7 +27,7 @@ int dy[4] = {0, 0, -1, 1};
 void player_move(int idx){
     int x = players[idx].x, y = players[idx].y;
     int dist = abs(x - gate.first) + abs(y - gate.second);
-    
+
     int dir = -1;
     for(int i=0; i<4; i++){
         int nx = x + dx[i], ny = y + dy[i];
@@ -59,12 +59,18 @@ void wall_move(){
         for(int j=0; j<n; j++) copy_board[i][j].clear();
     }
 
-    int MIN = 11, min_idx;
+    int MIN = 11, min_idx = -1;
     for(int i=1; i<=m; i++){
         if(players[i].gone) continue;
-        int dist = abs(players[i].x - gate.first) + abs(players[i].y - gate.second);
+
+        int dist = 0;
+        if(abs(players[i].x - gate.first) != 0) dist = abs(players[i].x - gate.first);
+        if(abs(players[i].y - gate.second) != 0) dist = max(dist, abs(players[i].y - gate.second));
+        
         if(MIN > dist){ MIN = dist; min_idx = i; }
     }
+
+    if(min_idx == -1) return;
 
     int sx = max(gate.first, players[min_idx].x), sy = max(gate.second, players[min_idx].y);
     for(int i=0; i<MIN; i++){
@@ -81,7 +87,9 @@ void wall_move(){
     for(int i=1; i<=m; i++){
         if(players[i].gone) continue;
         if(sx <= players[i].x && players[i].x <= (sx + MIN)){
-            if(sy <= players[i].y && players[i].y <= (sy + MIN)) copy_board[players[i].x][players[i].y].push_back(i * 100);
+            if(sy <= players[i].y && players[i].y <= (sy + MIN)){
+                copy_board[players[i].x][players[i].y].push_back(i * 100);
+            }
         }
     }
     copy_board[gate.first][gate.second].push_back(-1);
@@ -102,6 +110,7 @@ void wall_move(){
     }
 }
 
+
 int main() {
     cin >> n >> m >> k;
     for(int i=0; i<n; i++){
@@ -120,6 +129,10 @@ int main() {
             player_move(i);
         }
         wall_move();
+
+        int cnt = 0;
+        for(int i=1; i<m; i++) cnt += players[i].gone;
+        if(cnt == m) break;
     }
 
     cout << move_cnt << '\n';
